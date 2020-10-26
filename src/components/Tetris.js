@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { createStage } from '../gameHelpers';
+// Styled components
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
+
+// Custom Hooks
+import { usePlayer } from '../hooks/usePlayer';
+import { useStage } from '../hooks/useStage';
 
 // Components
 import Stage from './Stage';
