@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createStage } from '../gameHelpers';
 import { usePlayer } from './usePlayer';
 
-export const useStage = (player, resetTetromino) => {
+export const useStage = (player, resetPlayer) => {
     const [stage, setStage] = useState(createStage());
 
     useEffect(() => {
@@ -16,10 +16,10 @@ export const useStage = (player, resetTetromino) => {
                         newStage[y + player.position.y][x + player.position.x] = [
                             value, 
                             `${player.collided ? 'merged' : 'clear'}`,
-                        ]
+                        ];
                     }
-                })
-            })
+                });
+            });
             return newStage;
         }
         setStage(prev => updateStage(prev));
