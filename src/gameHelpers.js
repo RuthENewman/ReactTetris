@@ -7,18 +7,19 @@ export const createStage = () =>
     );
 
 export const checkCollision = (player, stage, { x: moveX, y: moveY }) => {
-    for(let y = 0; y < player.tetromino.length; y += 1) {
+    for (let y = 0; y < player.tetromino.length; y += 1) {
         for (let x = 0; x < player.tetromino[y].length; x += 1) {
-
             if (player.tetromino[y][x] !== 0) {
-                if (
-                    !stage[y + player.position.y + moveY] || 
-                    !stage[y + player.position.y + moveY][x + player.position.x + moveX] ||
-                    stage[y + player.position.y + moveY][x + player.position.x + moveX][1] !== 'clear'
+              if (
+                !stage[y + player.position.y + moveY] ||
+                !stage[y + player.position.y + moveY][x + player.position.x + moveX] ||
+                stage[y + player.position.y + moveY][x + player.position.x + moveX][1] !== 'clear'
                 ) {
                     return true;
-                }
+                  }
             }
         }
     }
-}
+};
+
+    

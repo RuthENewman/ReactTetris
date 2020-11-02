@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
-import { checkCollision, STAGE_WIDTH } from '../gameHelpers';
-
 import { TETROMINOS, generateRandomTetromino } from '../tetrominos';
+import { STAGE_WIDTH, checkCollision } from '../gameHelpers';
 
 export const usePlayer = () => {
     const [player, setPlayer] = useState({
@@ -11,7 +10,8 @@ export const usePlayer = () => {
     });
 
     const rotate = (matrix, direction) => {
-        const rotatedTetromino = matrix.map((val, index) => matrix.map(col => col[index]));
+        const rotatedTetromino = 
+            matrix.map((_, index) => matrix.map(col => col[index]));
         if (direction > 0) { 
             return rotatedTetromino.map(row => row.reverse()); 
         }
@@ -26,15 +26,14 @@ export const usePlayer = () => {
         while(checkCollision(clonedPlayer, stage, {
             x: 0, y: 0
         })) {
-            clonedPlayer.postiion.x += offset;
-            offset = (offset + (offset > 0 ? 1 : -1));
+            clonedPlayer.position.x += offset;
+            offset = -(offset + (offset > 0 ? 1 : -1));
             if (offset > clonedPlayer.tetromino[0].length) {
                 rotate(clonedPlayer.tetromino, -direction);
                 clonedPlayer.position.x = position;
                 return;
             }
         }
-        
         setPlayer(clonedPlayer);
     }
 
@@ -46,19 +45,16 @@ export const usePlayer = () => {
                 y: (prev.position.y += y)
             },
             collided
-        }))
+        }));
     }
 
     const resetPlayer = useCallback(() => {
         setPlayer({
-            position: { 
-                x: (STAGE_WIDTH / 2) - 2, 
-                y: 0
-            },
-            tetromino: generateRandomTetromino().shape,
-            collided: false
-        })
-    }, [])
+          position: { x: STAGE_WIDTH / 2 - 2, y: 0 },
+          tetromino: generateRandomTetromino().shape,
+          collided: false,
+        });
+      }, []);
 
     return [player, updatePlayerPosition, resetPlayer, playerRotate];
 }
