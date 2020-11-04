@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 import { usePlayer } from '../hooks/usePlayer';
 import { useStage } from '../hooks/useStage';
+import { useGameStatus } from '../hooks/useGameStatus';
 
 import { createStage, checkCollision } from '../gameHelpers';
 
@@ -17,9 +18,9 @@ import StartButton from './StartButton';
 const Tetris = () => {
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
-
     const [player, updatePlayerPosition, resetPlayer, playerRotate] = usePlayer();
-    const [stage, setStage] = useStage(player, resetPlayer);
+    const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
+    const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
 
     console.log('re-render');
 
@@ -38,6 +39,11 @@ const Tetris = () => {
     }
 
     const drop = () => {
+        if (rows > (level + 1) * 10) {
+            setLevel(prev => prev + 1);
+            setDropTime(1000 / (level + 1) + 200);
+        }
+
         if (!checkCollision(player, stage, { x: 0, y: 1})) {
             updatePlayerPosition({ x: 0, y: 1, collided: false });
         } else {

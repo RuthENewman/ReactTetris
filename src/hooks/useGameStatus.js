@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 export const useGameStatus = rowsCleared => {
     const [score, setScore] = useState(0);
-    const [rowš, setRows] = useState(0);
+    const [rows, setRows] = useState(0);
     const [level, setLevel] = useState(0);
 
     const linePoints = [40, 100, 300, 1200];
@@ -16,6 +16,7 @@ export const useGameStatus = rowsCleared => {
 
     useEffect(() => {
         calculateScore();
-    }, calculateScore, rowsCleared, score);
+    }, [calculateScore, rowsCleared, score]);
 
+    return [score, setScore, rows, setRows, level, setLevel]; 
 }
