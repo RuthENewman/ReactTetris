@@ -36,6 +36,9 @@ const Tetris = () => {
         setDropTime(1000);
         resetPlayer();
         setGameOver(false);
+        setScore(0);
+        setRows(0);
+        setLevel(0); 
     }
 
     const drop = () => {
@@ -59,7 +62,7 @@ const Tetris = () => {
     const keyUp = ({ keyCode }) => {
         if (!gameOver) {
             if (keyCode === 40) {
-                setDropTime(1000);
+                setDropTime(1000 / (level + 1) + 200);
             }
         }
     }
@@ -101,9 +104,9 @@ const Tetris = () => {
                         <Display gameOver={gameOver} text="Game Over" />
                     ) : (
                     <div>
-                        <Display text="Score" />
-                        <Display text="Rows" />
-                        <Display text="Level" />
+                        <Display text={`Score: ${score}`} />
+                        <Display text={`Rows: ${rows}`} />
+                        <Display text={`Level: ${level}`} />
                     </div>)}
                     <StartButton callback={startGame} />
                 </aside>
