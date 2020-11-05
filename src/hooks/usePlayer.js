@@ -21,7 +21,7 @@ export const usePlayer = () => {
     const playerRotate = (stage, direction) => {
         const clonedPlayer = JSON.parse(JSON.stringify(player));
         clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, direction);
-        const position = clonedPlayer.position.x;
+        const pos = clonedPlayer.position.x;
         let offset = 1;
         while(checkCollision(clonedPlayer, stage, {
             x: 0, y: 0
@@ -30,7 +30,7 @@ export const usePlayer = () => {
             offset = -(offset + (offset > 0 ? 1 : -1));
             if (offset > clonedPlayer.tetromino[0].length) {
                 rotate(clonedPlayer.tetromino, -direction);
-                clonedPlayer.position.x = position;
+                clonedPlayer.position.x = pos;
                 return;
             }
         }

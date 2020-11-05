@@ -8,4 +8,4 @@ const Cell = ({ type }) => (
       color={TETROMINOS[type].color} />
 );
 
-export default Cell;
+export default React.memo(Cell);
